@@ -1,0 +1,5 @@
+node_modules/
+build/
+release/
+*.local.json
+.DS_Store

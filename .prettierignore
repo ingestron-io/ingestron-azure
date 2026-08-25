@@ -1,0 +1,3 @@
+build/
+infra/**/*.bicep
+infra/**/*.bicepparam

@@ -1,0 +1,7 @@
+{
+  "bicepCli": "0.46.1",
+  "installCommand": "az bicep install --version v0.46.1",
+  "validationBinary": ".azure/bin/bicep",
+  "node": "22.x",
+  "pnpm": "10.15.0"
+}

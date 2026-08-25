@@ -1,0 +1,27 @@
+{
+  "name": "@ingestron/azure",
+  "version": "0.4.0-preview.1",
+  "private": true,
+  "license": "Apache-2.0",
+  "repository": "https://github.com/intentlabs-dev/ingestron-azure",
+  "packageManager": "pnpm@10.15.0",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "bicep:format:check": "node scripts/check-bicep-format.mjs",
+    "bicep:lint": "node scripts/lint-bicep.mjs",
+    "bicep:version": "node scripts/check-bicep-version.mjs",
+    "bundle:build": "node scripts/build-customer-bundle.mjs",
+    "release:candidate": "pnpm bundle:build && node scripts/build-release.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "secrets:check": "node scripts/scan-secrets.mjs",
+    "test": "node --test test/*.test.mjs",
+    "validate": "pnpm format:check && pnpm bicep:format:check && pnpm bicep:version && pnpm bundle:build && pnpm bicep:lint && pnpm test && pnpm release:candidate && pnpm secrets:check"
+  },
+  "devDependencies": {
+    "jszip": "3.10.1",
+    "prettier": "3.9.6"
+  }
+}
