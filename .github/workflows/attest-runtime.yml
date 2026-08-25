@@ -22,7 +22,7 @@ jobs:
         env:
           RELEASE_TAG: ${{ inputs.release_tag }}
         run: test "$RELEASE_TAG" = "v0.4.0-preview.1"
-      - name: Download distributed runtime assets
+      - name: Download distributed preview assets
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ inputs.release_tag }}
@@ -32,22 +32,43 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --dir runtime \
             --pattern 'ingestron-jobs-0.1.0-preview.1-*'
+          gh release download "$RELEASE_TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --dir runtime \
+            --pattern 'ingestron-azure-0.4.0-preview.1.*'
       - name: Verify the immutable Function package
         run: |
           test "$(sha256sum runtime/ingestron-jobs-0.1.0-preview.1-cd28333435a4.zip | cut -d' ' -f1)" = "cd28333435a4fa68e528bf49334e3f2499d46ca615b0af395c4b9f6a6d73a340"
+          test "$(sha256sum runtime/ingestron-azure-0.4.0-preview.1.zip | cut -d' ' -f1)" = "3abe64b2ed6b61ad98dae58f1a093f51f5a533510af9d863ffae51c5e278512d"
           jq -n \
             --arg sourceRepository "intentlabs-dev/ingestron-jobs" \
             --arg sourceRevision "9c89a462d345af1941bd37c5ceae3b2af6dc8796" \
             --arg releaseTag "${{ inputs.release_tag }}" \
             --arg worker "ghcr.io/intentlabs-dev/ingestron-jobs-worker@sha256:0e539a4bbf8d74b83e8b2e479c8e192376c5ebca66cb1cf2cc11b174004e7107" \
-            '{contract:"ingestron.runtime-distribution/v1",verification:"digest-matched-private-build-output",sourceRepository:$sourceRepository,sourceRevision:$sourceRevision,releaseTag:$releaseTag,workerImage:$worker,license:"LicenseRef-Ingestron-Runtime-Preview-1.0"}' \
+            '{contract:"ingestron.runtime-distribution/v1",verification:"digest-matched-release-assets",sourceRepository:$sourceRepository,sourceRevision:$sourceRevision,releaseTag:$releaseTag,azureSource:{repository:"intentlabs-dev/ingestron-azure",revision:"849f4a29f268eb9026e3266eb05e0a8f5fab9cf7",archiveSha256:"3abe64b2ed6b61ad98dae58f1a093f51f5a533510af9d863ffae51c5e278512d"},workerImage:$worker,license:"LicenseRef-Ingestron-Runtime-Preview-1.0"}' \
             > runtime/distribution-verification.json
+      - name: Attest Azure archive distribution verification
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: runtime/ingestron-azure-0.4.0-preview.1.zip
+          predicate-type: https://ingestron.io/attestations/runtime-distribution/v1
+          predicate-path: runtime/distribution-verification.json
+      - name: Attest Azure archive SBOM
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: runtime/ingestron-azure-0.4.0-preview.1.zip
+          sbom-path: runtime/ingestron-azure-0.4.0-preview.1.spdx.json
       - name: Attest Function distribution verification
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
         with:
           subject-path: runtime/ingestron-jobs-0.1.0-preview.1-cd28333435a4.zip
           predicate-type: https://ingestron.io/attestations/runtime-distribution/v1
           predicate-path: runtime/distribution-verification.json
+      - name: Attest Function SBOM
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: runtime/ingestron-jobs-0.1.0-preview.1-cd28333435a4.zip
+          sbom-path: runtime/ingestron-jobs-0.1.0-preview.1-cd28333435a4.spdx.json
       - name: Upload distribution record
         env:
           GH_TOKEN: ${{ github.token }}
