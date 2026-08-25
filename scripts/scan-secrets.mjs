@@ -8,13 +8,24 @@ const patterns = [
   ["JWT", /\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b/],
 ];
 
-const files = execFileSync("git", ["ls-files", "-z"], { encoding: "utf8" })
+const files = execFileSync(
+  "git",
+  ["ls-files", "-z", "--cached", "--others", "--exclude-standard"],
+  { encoding: "utf8" },
+)
   .split("\0")
   .filter(Boolean);
 const failures = [];
 
 for (const file of files) {
-  if ((await stat(file)).size > 1024 * 1024) continue;
+  let metadata;
+  try {
+    metadata = await stat(file);
+  } catch (error) {
+    if (error?.code === "ENOENT") continue;
+    throw error;
+  }
+  if (metadata.size > 1024 * 1024) continue;
   const contents = await readFile(file, "utf8");
   if (contents.includes("\0")) continue;
   for (const [label, pattern] of patterns) {
@@ -26,4 +37,4 @@ if (failures.length) {
   console.error(failures.join("\n"));
   process.exit(1);
 }
-console.log("No recognised secrets found in tracked files.");
+console.log("No recognised secrets found in version-controlled source files.");

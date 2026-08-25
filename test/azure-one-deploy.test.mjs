@@ -9,7 +9,7 @@ import {
   packageSha256,
   parseArguments,
   retryImmutableUpload,
-} from "../scripts/private-one-deploy.mjs";
+} from "../scripts/azure-one-deploy.mjs";
 
 const validArguments = [
   "--resource-group",
@@ -29,7 +29,7 @@ const validArguments = [
   "--subscription-name",
   "Labs",
   "--execute",
-  "private-one-deploy",
+  "azure-one-deploy",
 ];
 
 test("requires an explicit execution phrase and complete live target", () => {
@@ -45,12 +45,9 @@ test("requires an explicit execution phrase and complete live target", () => {
   assert.throws(
     () =>
       parseArguments(
-        validArguments.with(
-          validArguments.indexOf("private-one-deploy"),
-          "yes",
-        ),
+        validArguments.with(validArguments.indexOf("azure-one-deploy"), "yes"),
       ),
-    /must be exactly private-one-deploy/,
+    /must be exactly azure-one-deploy/,
   );
   assert.throws(
     () => parseArguments(validArguments.slice(0, -2)),
@@ -181,7 +178,7 @@ test("accepts a committed matching upload and rejects conflicting metadata", asy
 
 test("requires programme and monthly ceiling ownership tags", async () => {
   const source = await import("node:fs/promises").then(({ readFile }) =>
-    readFile("scripts/private-one-deploy.mjs", "utf8"),
+    readFile("scripts/azure-one-deploy.mjs", "utf8"),
   );
   assert.match(source, /ingestron:programme/);
   assert.match(source, /ingestron:monthly-cost-ceiling-usd/);
