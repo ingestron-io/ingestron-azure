@@ -16,7 +16,7 @@ test("builds a digest-pinned Profile J bundle from authoritative Bicep", async (
   assert.equal(manifest.profile, "profile-j");
   assert.equal(manifest.changePolicy.deletionAllowed, false);
   assert.equal(manifest.parameters.secretsForbidden, true);
-  assert.equal(manifest.applicationDeploymentHelper, "private-one-deploy.mjs");
+  assert.equal(manifest.applicationDeploymentHelper, "azure-one-deploy.mjs");
   assert.equal(
     manifest.applicationArtifacts.workerImage.sha256,
     "0e539a4bbf8d74b83e8b2e479c8e192376c5ebca66cb1cf2cc11b174004e7107",

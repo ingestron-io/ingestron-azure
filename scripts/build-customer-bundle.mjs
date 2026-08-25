@@ -84,7 +84,7 @@ export async function buildCustomerBundle(bundleVersion = "1.1.0") {
   };
   const helperName = definition.applicationDeploymentHelper;
   const helperTarget = resolve(outputDirectory, helperName);
-  await cp(resolve(root, "scripts/private-one-deploy.mjs"), helperTarget);
+  await cp(resolve(root, "scripts/azure-one-deploy.mjs"), helperTarget);
   const helperBytes = await readFile(helperTarget);
   files[helperName] = {
     sha256: sha256(helperBytes),
