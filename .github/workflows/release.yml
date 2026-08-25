@@ -29,6 +29,8 @@ jobs:
           package_version=$(node -p "require('./package.json').version")
           test "$RELEASE_TAG" = "v$package_version"
           pnpm install --frozen-lockfile
+      - name: Install pinned Bicep CLI without Azure login
+        run: az bicep install --version v0.46.1
       - run: pnpm validate
       - name: Attest Azure archive provenance
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
@@ -48,6 +50,7 @@ jobs:
             release/ingestron-azure-0.4.0-preview.1.spdx.json \
             release/ingestron-azure-0.4.0-preview.1.provenance.json \
             release/SHA256SUMS \
+            RUNTIME-SHA256SUMS \
             LICENSE-RUNTIME-PREVIEW.md \
             --verify-tag \
             --prerelease \
