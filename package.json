@@ -4,6 +4,16 @@
   "private": true,
   "license": "Apache-2.0",
   "repository": "https://github.com/intentlabs-dev/ingestron-azure",
+  "files": [
+    "bicep",
+    "bundle-definitions",
+    "scripts",
+    "LICENSE",
+    "NOTICE",
+    "LICENSING.md",
+    "LICENSE-RUNTIME-PREVIEW.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
   "packageManager": "pnpm@10.15.0",
   "engines": {
     "node": "22.x"
