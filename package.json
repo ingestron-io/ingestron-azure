@@ -1,9 +1,9 @@
 {
   "name": "@ingestron/azure",
-  "version": "0.4.0-preview.1",
+  "version": "0.4.1-preview.1",
   "private": true,
   "license": "Apache-2.0",
-  "repository": "https://github.com/intentlabs-dev/ingestron-azure",
+  "repository": "https://github.com/ingestron-io/ingestron-azure",
   "files": [
     "bicep",
     "bundle-definitions",

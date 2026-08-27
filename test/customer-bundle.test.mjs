@@ -32,7 +32,7 @@ test("builds a digest-pinned Profile J bundle from authoritative Bicep", async (
   );
   assert.match(
     manifest.applicationArtifacts.jobsFunctions.downloadUrl,
-    /^https:\/\/github\.com\/intentlabs-dev\/ingestron-azure\/releases\/download\//,
+    /^https:\/\/github\.com\/(?:intentlabs-dev|ingestron-io)\/ingestron-azure\/releases\/download\//,
   );
   assert.deepEqual(manifest.outputs, [
     "endpoint",
@@ -71,5 +71,23 @@ test("builds an explicit compatible no-op lifecycle candidate", async () => {
   assert.equal(
     manifest.applicationArtifacts.jobsFunctions.sha256,
     "cd28333435a4fa68e528bf49334e3f2499d46ca615b0af395c4b9f6a6d73a340",
+  );
+});
+
+test("builds the product-owned namespace bundle without changing runtime code", async () => {
+  const { manifest } = await buildCustomerBundle("1.2.0");
+  assert.equal(manifest.bundleVersion, "1.2.0");
+  assert.equal(manifest.minimumCliVersion, "0.3.1-preview.1");
+  assert.equal(
+    manifest.applicationArtifacts.workerImage.registry,
+    "ghcr.io/ingestron-io",
+  );
+  assert.equal(
+    manifest.applicationArtifacts.workerImage.sha256,
+    "896991d8f565c8dda1224361a17e89ad405d0f49dee4e961eaa262e5d4db74e7",
+  );
+  assert.match(
+    manifest.applicationArtifacts.jobsFunctions.downloadUrl,
+    /^https:\/\/github\.com\/ingestron-io\/ingestron-azure\/releases\/download\//,
   );
 });
