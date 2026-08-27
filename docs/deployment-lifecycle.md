@@ -25,6 +25,10 @@ until the replacement verifies. Uninstall previews and removes only the locked
 resource group and any separately recorded CLI-created directory object; drift
 or unrelated ownership fails closed.
 
+Bundle `1.2.1` intentionally pins the same templates and runtime artefacts as
+`1.2.0`. It exists to prove the public no-change upgrade and rollback lifecycle
+without implying a runtime capability change.
+
 The CLI does not create or retain customer storage credentials. Operators remain
 responsible for Azure subscription policy, provider registration, quota, budget,
 regional availability, identity approval, monitoring, backup, and data retention.

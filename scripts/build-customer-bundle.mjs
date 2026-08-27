@@ -9,7 +9,12 @@ import { fileURLToPath } from "node:url";
 import { bicepPath } from "./lib/bicep.mjs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-export const bundleVersions = Object.freeze(["1.1.0", "1.1.1", "1.2.0"]);
+export const bundleVersions = Object.freeze([
+  "1.1.0",
+  "1.1.1",
+  "1.2.0",
+  "1.2.1",
+]);
 
 export function sha256(value) {
   return createHash("sha256").update(value).digest("hex");

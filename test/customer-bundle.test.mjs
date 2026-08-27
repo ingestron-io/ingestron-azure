@@ -91,3 +91,26 @@ test("builds the product-owned namespace bundle without changing runtime code", 
     /^https:\/\/github\.com\/ingestron-io\/ingestron-azure\/releases\/download\//,
   );
 });
+
+test("builds a product-owned no-change upgrade and rollback candidate", async () => {
+  const baseline = await buildCustomerBundle("1.2.0");
+  const candidate = await buildCustomerBundle("1.2.1");
+  assert.equal(candidate.manifest.bundleVersion, "1.2.1");
+  assert.equal(candidate.manifest.minimumCliVersion, "0.3.2-preview.1");
+  assert.deepEqual(candidate.manifest.templates, baseline.manifest.templates);
+  assert.deepEqual(
+    candidate.manifest.applicationArtifacts,
+    baseline.manifest.applicationArtifacts,
+  );
+  for (const fileName of [
+    "profile-j-foundation.json",
+    "profile-j-runtime.json",
+    "azure-one-deploy.mjs",
+    "LICENSE-RUNTIME-PREVIEW.md",
+  ]) {
+    assert.deepEqual(
+      candidate.manifest.files[fileName],
+      baseline.manifest.files[fileName],
+    );
+  }
+});
