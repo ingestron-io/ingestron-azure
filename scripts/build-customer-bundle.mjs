@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import { bicepPath } from "./lib/bicep.mjs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-export const bundleVersions = Object.freeze(["1.1.0", "1.1.1"]);
+export const bundleVersions = Object.freeze(["1.1.0", "1.1.1", "1.2.0"]);
 
 export function sha256(value) {
   return createHash("sha256").update(value).digest("hex");
@@ -102,7 +102,7 @@ export async function buildCustomerBundle(bundleVersion = "1.1.0") {
   const manifest = {
     ...definition,
     source: {
-      repository: "intentlabs-dev/ingestron-azure",
+      repository: "ingestron-io/ingestron-azure",
       revision: sourceRevision(),
     },
     generatedAt: "1980-01-01T00:00:00.000Z",

@@ -4,7 +4,7 @@ Customer-managed Azure deployment tooling for the Ingestron Profile J technical
 preview. This repository contains inspectable Bicep, deterministic bundle
 assembly, change boundaries, and the guarded Function package deployment helper.
 
-Most operators should use the [Ingestron CLI](https://github.com/intentlabs-dev/ingestron-cli),
+Most operators should use the [Ingestron CLI](https://github.com/ingestron-io/ingestron-cli),
 which verifies these bundles and manages plan, install, status, verification,
 upgrade, rollback, ADF hand-off, and exact uninstall.
 
@@ -20,7 +20,8 @@ az bicep install --version v0.46.1
 pnpm validate
 ```
 
-`pnpm bundle:build` writes deterministic Profile J bundles `1.1.0` and `1.1.1`
+`pnpm bundle:build` writes deterministic Profile J bundles `1.1.0`, `1.1.1` and
+`1.2.0`
 under `build/customer-bundle/`. Every manifest pins the Bicep templates, guarded
 deployment helper, Function ZIP, public worker image, applicable licences, and
 their SHA-256 digests.

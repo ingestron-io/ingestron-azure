@@ -45,7 +45,7 @@ const archiveDigest = sha256(archive);
 await writeFile(path.join(release, archiveName), archive);
 
 const manifests = await Promise.all(
-  ["1.1.0", "1.1.1"].map(async (version) =>
+  ["1.1.0", "1.1.1", "1.2.0"].map(async (version) =>
     JSON.parse(
       await readFile(
         path.join(
@@ -57,7 +57,7 @@ const manifests = await Promise.all(
     ),
   ),
 );
-const runtime = manifests[0].applicationArtifacts;
+const runtime = manifests.at(-1).applicationArtifacts;
 const sbom = {
   spdxVersion: "SPDX-2.3",
   dataLicense: "CC0-1.0",
