@@ -34,6 +34,12 @@ the `landing.batch-contract-gate` outcome. It creates no additional Azure
 resource. The outcome is accepted only by the customer-managed runtime and uses
 the same Entra, Queue, Table, Blob and ADF lifecycle as the workbook job.
 
+Bundle `1.4.0` changes only the immutable Function and worker artefacts needed by
+`copy.batch-reconciliation-gate`. The child receives a digest-pinned control
+manifest and does not read either copied dataset. It uses the same resources and
+customer-managed lifecycle; no new standing access or Hosted Jobs route is
+introduced.
+
 The CLI does not create or retain customer storage credentials. Operators remain
 responsible for Azure subscription policy, provider registration, quota, budget,
 regional availability, identity approval, monitoring, backup, and data retention.

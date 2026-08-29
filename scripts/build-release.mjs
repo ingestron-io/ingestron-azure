@@ -45,7 +45,7 @@ const archiveDigest = sha256(archive);
 await writeFile(path.join(release, archiveName), archive);
 
 const manifests = await Promise.all(
-  ["1.1.0", "1.1.1", "1.2.0", "1.2.1", "1.3.0"].map(async (version) =>
+  ["1.1.0", "1.1.1", "1.2.0", "1.2.1", "1.3.0", "1.4.0"].map(async (version) =>
     JSON.parse(
       await readFile(
         path.join(

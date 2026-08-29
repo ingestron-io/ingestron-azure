@@ -15,6 +15,7 @@ export const bundleVersions = Object.freeze([
   "1.2.0",
   "1.2.1",
   "1.3.0",
+  "1.4.0",
 ]);
 
 export function sha256(value) {
