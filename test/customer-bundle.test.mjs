@@ -158,3 +158,29 @@ test("builds the copy-reconciliation runtime bundle without new resources", asyn
   assert.deepEqual(candidate.manifest.parameters, baseline.manifest.parameters);
   assert.deepEqual(candidate.manifest.outputs, baseline.manifest.outputs);
 });
+
+test("builds the schema-baseline runtime bundle without new resources", async () => {
+  const baseline = await buildCustomerBundle("1.4.0");
+  const candidate = await buildCustomerBundle("1.5.0");
+  assert.equal(candidate.manifest.bundleVersion, "1.5.0");
+  assert.equal(candidate.manifest.minimumCliVersion, "0.3.7-preview.1");
+  assert.equal(
+    candidate.manifest.applicationArtifacts.jobsFunctions.version,
+    "0.4.0-preview.1",
+  );
+  assert.equal(
+    candidate.manifest.applicationArtifacts.jobsFunctions.sha256,
+    "501be522c3717490b3f7e264abce117b4a1988a6a421ad8d15efbf180843cc77",
+  );
+  assert.equal(
+    candidate.manifest.applicationArtifacts.workerImage.sha256,
+    "12e00bff5bbfa9a583cb944c33a47836fbb12a655b581265ae38eb2d6cf77660",
+  );
+  assert.match(
+    candidate.manifest.applicationArtifacts.jobsFunctions.downloadUrl,
+    /v0\.4\.5-preview\.1/,
+  );
+  assert.deepEqual(candidate.manifest.templates, baseline.manifest.templates);
+  assert.deepEqual(candidate.manifest.parameters, baseline.manifest.parameters);
+  assert.deepEqual(candidate.manifest.outputs, baseline.manifest.outputs);
+});

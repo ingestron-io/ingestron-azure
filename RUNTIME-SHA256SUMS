@@ -1,4 +1,4 @@
-8db305318e8215ab1c2240b83992fae49a430b38b992e7bd592229ead7b81bd5  ingestron-jobs-0.3.0-preview.1-8db305318e82.zip
-0105de2f625e86ec564493fa27344a08205d8e63686d5431e96753838fd4b29a  ingestron-jobs-0.3.0-preview.1-8db305318e82.json
-7517bfccf3b3ef63be67f05c1240e05febc04bdf1e07748b2bfe23151e96da7f  ingestron-jobs-0.3.0-preview.1-8db305318e82.spdx.json
-faf796416d76328b3e1a382fd4c1c236bbad524b8d52ad714581af0cafdf2532  ghcr.io/ingestron-io/ingestron-jobs-worker
+501be522c3717490b3f7e264abce117b4a1988a6a421ad8d15efbf180843cc77  ingestron-jobs-0.4.0-preview.1-501be522c371.zip
+efaa81a459c689d3ce7053e9c651154ad1d6b331e7519eac917b41f0d883e7e9  ingestron-jobs-0.4.0-preview.1-501be522c371.json
+d6d3ec360a1381cb4b1f2cba2eabd7f425d8e03dfab1b165722658d08038a074  ingestron-jobs-0.4.0-preview.1-501be522c371.spdx.json
+12e00bff5bbfa9a583cb944c33a47836fbb12a655b581265ae38eb2d6cf77660  ghcr.io/ingestron-io/ingestron-jobs-worker
