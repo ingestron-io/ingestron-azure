@@ -21,10 +21,13 @@ pnpm validate
 ```
 
 `pnpm bundle:build` writes deterministic Profile J bundles `1.1.0`, `1.1.1`,
-`1.2.0` and `1.2.1`
+`1.2.0`, `1.2.1` and `1.3.0`
 under `build/customer-bundle/`. Every manifest pins the Bicep templates, guarded
 deployment helper, Function ZIP, public worker image, applicable licences, and
 their SHA-256 digests.
+
+Bundle `1.3.0` adds the customer-managed durable landing-batch contract gate. It
+does not enable the outcome in Hosted Jobs or add Azure resources.
 
 ## Licence boundary
 

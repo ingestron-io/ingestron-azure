@@ -114,3 +114,25 @@ test("builds a product-owned no-change upgrade and rollback candidate", async ()
     );
   }
 });
+
+test("builds the landing-batch runtime bundle with immutable preview artefacts", async () => {
+  const candidate = await buildCustomerBundle("1.3.0");
+  assert.equal(candidate.manifest.bundleVersion, "1.3.0");
+  assert.equal(candidate.manifest.minimumCliVersion, "0.3.5-preview.1");
+  assert.equal(
+    candidate.manifest.applicationArtifacts.jobsFunctions.version,
+    "0.2.0-preview.1",
+  );
+  assert.equal(
+    candidate.manifest.applicationArtifacts.jobsFunctions.sha256,
+    "60cfc9426ec5ae8b38acf731d826481c059313439204808a1265717ed7d81f8a",
+  );
+  assert.match(
+    candidate.manifest.applicationArtifacts.jobsFunctions.downloadUrl,
+    /v0\.4\.3-preview\.1/,
+  );
+  assert.equal(
+    candidate.manifest.applicationArtifacts.workerImage.sha256,
+    "faf796416d76328b3e1a382fd4c1c236bbad524b8d52ad714581af0cafdf2532",
+  );
+});

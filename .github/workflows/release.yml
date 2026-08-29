@@ -1,8 +1,12 @@
 name: Release
 
 on:
-  push:
-    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      releaseTag:
+        description: Existing draft release tag containing the immutable runtime files
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -15,6 +19,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1e # v7.0.1
+        with:
+          ref: ${{ inputs.releaseTag }}
       - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
         with:
           version: 10.15.0
@@ -25,7 +31,7 @@ jobs:
       - name: Verify tag and install
         id: metadata
         env:
-          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_TAG: ${{ inputs.releaseTag }}
         run: |
           package_version=$(node -p "require('./package.json').version")
           test "$RELEASE_TAG" = "v$package_version"
@@ -37,12 +43,13 @@ jobs:
       - name: Download immutable Function distribution
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.releaseTag }}
         run: |
           mkdir runtime
-          gh release download v0.4.0-preview.1 \
+          gh release download "$RELEASE_TAG" \
             --repo "$GITHUB_REPOSITORY" \
             --dir runtime \
-            --pattern 'ingestron-jobs-0.1.0-preview.1-*'
+            --pattern 'ingestron-jobs-0.2.0-preview.1-*'
       - name: Attest Azure archive provenance
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
         with:
@@ -52,11 +59,12 @@ jobs:
         with:
           subject-path: release/ingestron-azure-${{ steps.metadata.outputs.version }}.zip
           sbom-path: release/ingestron-azure-${{ steps.metadata.outputs.version }}.spdx.json
-      - name: Create preview release
+      - name: Complete preview release
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.releaseTag }}
         run: |
-          gh release create "$GITHUB_REF_NAME" \
+          gh release upload "$RELEASE_TAG" \
             release/ingestron-azure-${{ steps.metadata.outputs.version }}.zip \
             release/ingestron-azure-${{ steps.metadata.outputs.version }}.spdx.json \
             release/ingestron-azure-${{ steps.metadata.outputs.version }}.provenance.json \
@@ -64,7 +72,9 @@ jobs:
             runtime/* \
             RUNTIME-SHA256SUMS \
             LICENSE-RUNTIME-PREVIEW.md \
-            --verify-tag \
+            --clobber
+          gh release edit "$RELEASE_TAG" \
+            --draft=false \
             --prerelease \
             --title "Ingestron Azure ${{ steps.metadata.outputs.version }}" \
             --notes "Unsupported customer-managed Azure technical preview. Source is Apache-2.0; referenced runtime artefacts use the separate Ingestron Runtime Preview Licence. See LICENSING.md, SECURITY.md, and COMPATIBILITY.md before deployment."
