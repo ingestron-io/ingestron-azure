@@ -136,3 +136,25 @@ test("builds the landing-batch runtime bundle with immutable preview artefacts",
     "faf796416d76328b3e1a382fd4c1c236bbad524b8d52ad714581af0cafdf2532",
   );
 });
+
+test("builds the copy-reconciliation runtime bundle without new resources", async () => {
+  const baseline = await buildCustomerBundle("1.3.0");
+  const candidate = await buildCustomerBundle("1.4.0");
+  assert.equal(candidate.manifest.bundleVersion, "1.4.0");
+  assert.equal(candidate.manifest.minimumCliVersion, "0.3.6-preview.1");
+  assert.equal(
+    candidate.manifest.applicationArtifacts.jobsFunctions.version,
+    "0.3.0-preview.1",
+  );
+  assert.equal(
+    candidate.manifest.applicationArtifacts.jobsFunctions.sha256,
+    "8db305318e8215ab1c2240b83992fae49a430b38b992e7bd592229ead7b81bd5",
+  );
+  assert.match(
+    candidate.manifest.applicationArtifacts.jobsFunctions.downloadUrl,
+    /v0\.4\.4-preview\.1/,
+  );
+  assert.deepEqual(candidate.manifest.templates, baseline.manifest.templates);
+  assert.deepEqual(candidate.manifest.parameters, baseline.manifest.parameters);
+  assert.deepEqual(candidate.manifest.outputs, baseline.manifest.outputs);
+});
