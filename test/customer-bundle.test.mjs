@@ -210,3 +210,29 @@ test("builds the dataset-quality runtime bundle without new resources", async ()
   assert.deepEqual(candidate.manifest.parameters, baseline.manifest.parameters);
   assert.deepEqual(candidate.manifest.outputs, baseline.manifest.outputs);
 });
+
+test("builds the reference-integrity runtime bundle without new resources", async () => {
+  const baseline = await buildCustomerBundle("1.6.0");
+  const candidate = await buildCustomerBundle("1.7.0");
+  assert.equal(candidate.manifest.bundleVersion, "1.7.0");
+  assert.equal(candidate.manifest.minimumCliVersion, "0.3.9-preview.1");
+  assert.equal(
+    candidate.manifest.applicationArtifacts.jobsFunctions.version,
+    "0.6.0-preview.1",
+  );
+  assert.equal(
+    candidate.manifest.applicationArtifacts.jobsFunctions.sha256,
+    "fecda3d6f749730f83c240a5734498afad9bf68121e1c43d6c0a11d0371f946e",
+  );
+  assert.equal(
+    candidate.manifest.applicationArtifacts.workerImage.sha256,
+    "9ea98d1c80cefb0c96fa5997a85b7268ba8a391bdd88200670bbe7b56ecead9f",
+  );
+  assert.match(
+    candidate.manifest.applicationArtifacts.jobsFunctions.downloadUrl,
+    /v0\.4\.7-preview\.1/,
+  );
+  assert.deepEqual(candidate.manifest.templates, baseline.manifest.templates);
+  assert.deepEqual(candidate.manifest.parameters, baseline.manifest.parameters);
+  assert.deepEqual(candidate.manifest.outputs, baseline.manifest.outputs);
+});
