@@ -45,17 +45,26 @@ const archiveDigest = sha256(archive);
 await writeFile(path.join(release, archiveName), archive);
 
 const manifests = await Promise.all(
-  ["1.1.0", "1.1.1", "1.2.0", "1.2.1", "1.3.0", "1.4.0", "1.5.0", "1.6.0"].map(
-    async (version) =>
-      JSON.parse(
-        await readFile(
-          path.join(
-            root,
-            `build/customer-bundle/profile-j/${version}/manifest.json`,
-          ),
-          "utf8",
+  [
+    "1.1.0",
+    "1.1.1",
+    "1.2.0",
+    "1.2.1",
+    "1.3.0",
+    "1.4.0",
+    "1.5.0",
+    "1.6.0",
+    "1.7.0",
+  ].map(async (version) =>
+    JSON.parse(
+      await readFile(
+        path.join(
+          root,
+          `build/customer-bundle/profile-j/${version}/manifest.json`,
         ),
+        "utf8",
       ),
+    ),
   ),
 );
 const runtime = manifests.at(-1).applicationArtifacts;

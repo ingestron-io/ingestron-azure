@@ -52,6 +52,11 @@ control sample, applies explicit Core-compatible rules and publishes value-free
 decision evidence. It uses the same resources and customer-managed lifecycle;
 no automatic sampling, new standing access or Hosted Jobs route is introduced.
 
+Bundle `1.7.0` likewise changes only the immutable Function and worker artefacts
+needed by `dataset.reference-integrity-gate`. The child reads one digest-pinned
+YAML/JSON key-control manifest, not either referenced dataset. Templates,
+parameters, outputs and owned Azure resources are unchanged from `1.6.0`.
+
 The CLI does not create or retain customer storage credentials. Operators remain
 responsible for Azure subscription policy, provider registration, quota, budget,
 regional availability, identity approval, monitoring, backup, and data retention.

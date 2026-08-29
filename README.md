@@ -21,7 +21,7 @@ pnpm validate
 ```
 
 `pnpm bundle:build` writes deterministic Profile J bundles `1.1.0`, `1.1.1`,
-`1.2.0`, `1.2.1`, `1.3.0`, `1.4.0`, `1.5.0` and `1.6.0`
+`1.2.0`, `1.2.1`, `1.3.0`, `1.4.0`, `1.5.0`, `1.6.0` and `1.7.0`
 under `build/customer-bundle/`. Every manifest pins the Bicep templates, guarded
 deployment helper, Function ZIP, public worker image, applicable licences, and
 their SHA-256 digests.
@@ -42,6 +42,13 @@ Bundle `1.6.0` adds the customer-managed durable dataset quality-policy gate.
 It pins Jobs `0.5.0-preview.1`, evaluates only the bounded JSON control sample
 inside one digest-pinned manifest and creates no new Azure resource. Hosted Jobs
 remains unchanged.
+
+Bundle `1.7.0` adds the customer-managed durable reference-integrity gate. It
+pins Jobs `0.6.0-preview.1` and checks only the key tuples deliberately supplied
+in one bounded control manifest. The result identifies duplicate entity keys and
+orphan references by check name and input index without persisting key values.
+The bundle adds no Azure resource, Hosted Jobs route, dataset reader or join
+service.
 
 ## Licence boundary
 

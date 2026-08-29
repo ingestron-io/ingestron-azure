@@ -10,6 +10,7 @@
 | `1.4.0`      | `0.3.6-preview.1` | `0.3.0-preview.1` | Durable post-Copy reconciliation gate        |
 | `1.5.0`      | `0.3.7-preview.1` | `0.4.0-preview.1` | Durable schema baseline compatibility gate   |
 | `1.6.0`      | `0.3.8-preview.1` | `0.5.0-preview.1` | Durable bounded dataset quality-policy gate  |
+| `1.7.0`      | `0.3.9-preview.1` | `0.6.0-preview.1` | Durable bounded reference-integrity gate     |
 
 Both bundles target Azure CLI with Bicep `0.46.1`, Node.js 22 Functions Flex
 Consumption, Azure Container Apps Jobs, Basic ACR, Storage, Table, Queue, Blob,

@@ -28,6 +28,6 @@ test("public tree excludes private proof and vendored runtime source", async () 
 
 test("release workflow fetches the exact current runtime family", async () => {
   const release = await readFile(".github/workflows/release.yml", "utf8");
-  assert.match(release, /ingestron-jobs-0\.5\.0-preview\.1-/);
-  assert.doesNotMatch(release, /ingestron-jobs-0\.4\.0-preview\.1-/);
+  assert.match(release, /ingestron-jobs-0\.6\.0-preview\.1-/);
+  assert.doesNotMatch(release, /ingestron-jobs-0\.5\.0-preview\.1-/);
 });
