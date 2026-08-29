@@ -46,6 +46,12 @@ manifest and publishes compatibility decisions plus bounded change codes and
 paths. It uses the same resources and customer-managed lifecycle; no schema
 registry, new standing access or Hosted Jobs route is introduced.
 
+Bundle `1.6.0` changes only the immutable Function and worker artefacts needed by
+`dataset.quality-policy-gate`. The child reads one digest-pinned bounded JSON
+control sample, applies explicit Core-compatible rules and publishes value-free
+decision evidence. It uses the same resources and customer-managed lifecycle;
+no automatic sampling, new standing access or Hosted Jobs route is introduced.
+
 The CLI does not create or retain customer storage credentials. Operators remain
 responsible for Azure subscription policy, provider registration, quota, budget,
 regional availability, identity approval, monitoring, backup, and data retention.
