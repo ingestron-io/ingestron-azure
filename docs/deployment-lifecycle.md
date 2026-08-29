@@ -40,6 +40,12 @@ manifest and does not read either copied dataset. It uses the same resources and
 customer-managed lifecycle; no new standing access or Hosted Jobs route is
 introduced.
 
+Bundle `1.5.0` changes only the immutable Function and worker artefacts needed by
+`schema.baseline-compatibility-gate`. The child reads one digest-pinned control
+manifest and publishes compatibility decisions plus bounded change codes and
+paths. It uses the same resources and customer-managed lifecycle; no schema
+registry, new standing access or Hosted Jobs route is introduced.
+
 The CLI does not create or retain customer storage credentials. Operators remain
 responsible for Azure subscription policy, provider registration, quota, budget,
 regional availability, identity approval, monitoring, backup, and data retention.
