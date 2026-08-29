@@ -29,6 +29,11 @@ Bundle `1.2.1` intentionally pins the same templates and runtime artefacts as
 `1.2.0`. It exists to prove the public no-change upgrade and rollback lifecycle
 without implying a runtime capability change.
 
+Bundle `1.3.0` changes only the immutable Function and worker artefacts needed by
+the `landing.batch-contract-gate` outcome. It creates no additional Azure
+resource. The outcome is accepted only by the customer-managed runtime and uses
+the same Entra, Queue, Table, Blob and ADF lifecycle as the workbook job.
+
 The CLI does not create or retain customer storage credentials. Operators remain
 responsible for Azure subscription policy, provider registration, quota, budget,
 regional availability, identity approval, monitoring, backup, and data retention.
