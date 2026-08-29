@@ -47,7 +47,7 @@ jobs:
           gh release download "$RELEASE_TAG" \
             --repo "$GITHUB_REPOSITORY" \
             --dir runtime \
-            --pattern 'ingestron-jobs-0.2.0-preview.1-*'
+            --pattern 'ingestron-jobs-0.3.0-preview.1-*'
       - name: Attest Azure archive provenance
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
         with:
