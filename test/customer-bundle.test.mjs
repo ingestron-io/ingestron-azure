@@ -264,3 +264,31 @@ test("publishes an explicit pause and resume policy without changing resources",
     baseline.manifest.applicationArtifacts,
   );
 });
+
+test("publishes Flex-safe intake pause and exact public-profile adoption", async () => {
+  const baseline = await buildCustomerBundle("1.8.0");
+  const candidate = await buildCustomerBundle("1.9.0");
+  assert.equal(candidate.manifest.minimumCliVersion, "0.3.11-preview.1");
+  assert.equal(
+    candidate.manifest.lifecyclePolicy.targets["jobs-api-trigger"].kind,
+    "azure-function-trigger",
+  );
+  assert.equal(
+    candidate.manifest.lifecyclePolicy.targets["jobs-api-trigger"]
+      .disabledSetting,
+    "AzureWebJobs.submitIngestronJob.Disabled",
+  );
+  assert.equal(
+    candidate.manifest.adoptionPolicy.contract,
+    "ingestron.azure-adoption/v1",
+  );
+  assert.deepEqual(candidate.manifest.adoptionPolicy.supportedIngressModes, [
+    "entra-public",
+  ]);
+  assert.equal(candidate.manifest.adoptionPolicy.requiredResources.length, 7);
+  assert.deepEqual(candidate.manifest.templates, baseline.manifest.templates);
+  assert.deepEqual(
+    candidate.manifest.applicationArtifacts,
+    baseline.manifest.applicationArtifacts,
+  );
+});
