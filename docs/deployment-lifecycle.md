@@ -25,7 +25,15 @@ group and retain the same plan, ownership-lock and explicit-confirmation gates.
 Partial deletion is deliberately unsupported because it can remove retained
 data or leave a deployment that Bicep can no longer reconcile safely.
 
-Bundle `1.8.0` adds a versioned lifecycle policy for `pause` and `resume`.
+Bundle `1.9.0` supersedes the initial `1.8.0` lifecycle experiment. Flex
+Consumption apps do not expose the ordinary App Service running/stopped state,
+so `1.9.0` pauses new workload intake by disabling the exact
+`submitIngestronJob` function trigger and verifies that setting. Existing queued
+or running jobs may finish. The bundle also declares the exact seven-resource,
+public-ingress inventory that a guarded CLI adoption may reconcile; private
+ingress adoption remains unsupported until its larger inventory is specified.
+
+The versioned lifecycle policy supports `pause` and `resume`.
 The default `cost-bearing` scope stops only declared consumption-compute entry
 points. `all` means every target that the bundle explicitly declares pausable;
 it does not delete storage, registry, network or monitoring resources. Azure can
