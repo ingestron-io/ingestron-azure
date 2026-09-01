@@ -21,7 +21,7 @@ pnpm validate
 ```
 
 `pnpm bundle:build` writes deterministic Profile J bundles `1.1.0`, `1.1.1`,
-`1.2.0`, `1.2.1`, `1.3.0`, `1.4.0`, `1.5.0`, `1.6.0` and `1.7.0`
+`1.2.0`, `1.2.1`, `1.3.0`, `1.4.0`, `1.5.0`, `1.6.0`, `1.7.0` and `1.8.0`
 under `build/customer-bundle/`. Every manifest pins the Bicep templates, guarded
 deployment helper, Function ZIP, public worker image, applicable licences, and
 their SHA-256 digests.

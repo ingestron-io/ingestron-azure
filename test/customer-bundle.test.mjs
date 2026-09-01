@@ -236,3 +236,31 @@ test("builds the reference-integrity runtime bundle without new resources", asyn
   assert.deepEqual(candidate.manifest.parameters, baseline.manifest.parameters);
   assert.deepEqual(candidate.manifest.outputs, baseline.manifest.outputs);
 });
+
+test("publishes an explicit pause and resume policy without changing resources", async () => {
+  const baseline = await buildCustomerBundle("1.7.0");
+  const candidate = await buildCustomerBundle("1.8.0");
+  assert.equal(candidate.manifest.minimumCliVersion, "0.3.10-preview.1");
+  assert.equal(
+    candidate.manifest.lifecyclePolicy.contract,
+    "ingestron.azure-lifecycle/v1",
+  );
+  assert.equal(candidate.manifest.lifecyclePolicy.defaultScope, "cost-bearing");
+  assert.deepEqual(candidate.manifest.lifecyclePolicy.scopes, {
+    "cost-bearing": ["jobs-api"],
+    all: ["jobs-api"],
+  });
+  assert.equal(
+    candidate.manifest.lifecyclePolicy.targets["jobs-api"].kind,
+    "azure-function-app",
+  );
+  assert.equal(
+    candidate.manifest.lifecyclePolicy.dropScope,
+    "owned-resource-group-only",
+  );
+  assert.deepEqual(candidate.manifest.templates, baseline.manifest.templates);
+  assert.deepEqual(
+    candidate.manifest.applicationArtifacts,
+    baseline.manifest.applicationArtifacts,
+  );
+});

@@ -6,14 +6,32 @@ Use the Ingestron CLI for the supported preview workflow:
 ingestron azure init
 ingestron azure plan
 ingestron azure install
+ingestron azure create
 ingestron azure status
 ingestron azure verify
+ingestron azure pause --scope cost-bearing
+ingestron azure resume --scope cost-bearing
 ingestron azure upgrade
 ingestron azure rollback
 ingestron azure adf-config
 ingestron azure plan-uninstall
 ingestron azure uninstall
+ingestron azure drop
 ```
+
+`create` and `drop` are lifecycle names for the existing exact `install` and
+`uninstall` boundaries. They always act on the complete Bicep-owned resource
+group and retain the same plan, ownership-lock and explicit-confirmation gates.
+Partial deletion is deliberately unsupported because it can remove retained
+data or leave a deployment that Bicep can no longer reconcile safely.
+
+Bundle `1.8.0` adds a versioned lifecycle policy for `pause` and `resume`.
+The default `cost-bearing` scope stops only declared consumption-compute entry
+points. `all` means every target that the bundle explicitly declares pausable;
+it does not delete storage, registry, network or monitoring resources. Azure can
+therefore continue to charge retention or usage costs while a deployment is
+paused. Use `drop` after reviewing `plan-uninstall` when the complete owned
+installation is no longer required.
 
 The CLI discovers the active Azure context, writes secret-free intent, verifies
 the exact bundle/runtime digests, and runs Azure what-if before mutation. Install
