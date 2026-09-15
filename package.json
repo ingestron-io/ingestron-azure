@@ -31,7 +31,7 @@
     "validate": "pnpm format:check && pnpm bicep:format:check && pnpm bicep:version && pnpm bundle:build && pnpm bicep:lint && pnpm test && pnpm release:candidate && pnpm secrets:check"
   },
   "devDependencies": {
-    "jszip": "3.10.1",
+    "jszip": "3.10.2",
     "prettier": "3.9.6"
   }
 }
