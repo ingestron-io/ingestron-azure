@@ -32,6 +32,6 @@
   },
   "devDependencies": {
     "jszip": "3.10.1",
-    "prettier": "3.9.6"
+    "prettier": "3.9.8"
   }
 }
